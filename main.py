@@ -13,10 +13,20 @@ logging.getLogger("mcp.client.streamable_http").setLevel(logging.CRITICAL)
 load_dotenv()
 
 async def main():
-    # Create sandbox with only Perplexity MCP
+    # Create sandbox with Perplexity and Firecrawl MCP servers
     sbx = await AsyncSandbox.create(mcp={
         "perplexityAsk": {
             "perplexityApiKey": os.getenv("PERPLEXITY_API_KEY"),
+        },
+        "firecrawl": {
+            "apiKey": os.getenv("FIRECRAWL_API_KEY"),
+            "url": "https://api.firecrawl.dev",
+            "creditCriticalThreshold": 100,
+            "creditWarningThreshold": 500,
+            "retryBackoffFactor": 2,
+            "retryDelay": 1000,
+            "retryMax": 3,
+            "retryMaxDelay": 10000,
         },
     })
 
